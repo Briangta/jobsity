@@ -1,0 +1,29 @@
+﻿@model jobsity.Repository.Message
+@using jobsity.Utilities
+
+@{
+    ViewBag.Title = "Chat";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @*@Html.HiddenFor(r => r.IdUser, Security.LoggedUser.IdUser)*@
+
+    <div class="card col-sm-6 offset-sm-4">
+        <div class="card-header bg-primary text-white card-title">CHAT</div>
+        <div class="card-body" id="messages">
+
+        </div>
+        <div class="card-footer">
+            @Html.LabelFor(r => r.Message1, "Message")
+            @Html.TextAreaFor(r => r.Message1, new { Class = "form-control", Required = "" }) <input type="submit" value="Enviar" class="btn btn-outline-primary" />
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

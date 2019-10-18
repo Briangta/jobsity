@@ -2,12 +2,15 @@
 using System.Web.Mvc;
 using System.Web;
 using jobsity.Utilities.Enumerators;
+using System.Security.Cryptography;
 
 namespace jobsity.Utilities
 {
     public class Security : AuthorizeAttribute
     {
         private const string SessiionUser = "STR_SESSION_USER";
+
+        
         public static User LoggedUser
         {
             get
@@ -24,6 +27,9 @@ namespace jobsity.Utilities
             get;
             set;
         }
+
+        public static bool isAdmin = false;
+
         public Security(bool exit = false, bool admin = false)
         {
             this.exit = exit;
@@ -34,9 +40,28 @@ namespace jobsity.Utilities
 
         }
 
+        public static string Md5Enc(string clave)
+        {
+            MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider();
+            byte[] data = System.Text.Encoding.ASCII.GetBytes(clave);
+            data = provider.ComputeHash(data);
+            string md5 = string.Empty;
+            for (int i = 0; i < data.Length; i++)
+                md5 += data[i].ToString("x2").ToLower();
+
+            return md5;
+        }
+
         public static void Login(User user)
         {
             LoggedUser = user;
+            isAdmin = user.IdRole == (int)EnumRole.Admin;
+        }
+
+        public static void SignOut()
+        {
+            if (HttpContext.Current.Session != null)
+                HttpContext.Current.Session.Clear();
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
