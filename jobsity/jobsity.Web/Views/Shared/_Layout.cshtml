@@ -8,6 +8,13 @@
     <title>@ViewBag.Title - Chat Jobsity</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/site.js"></script>
 </head>
 <body>
 
@@ -18,16 +25,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                @Html.ActionLink("Chat", "Index", "Chat", new { Class = "nav-link nav-item" })
 
-                <li class="nav-item">
-                    @Html.ActionLink("Chat", "Index", "Chat", new { Class = "nav-link" })
-                    @Html.ActionLink("Users", "Index", "User", new { Class = "nav-link" })
-                </li>
                 @if (Security.isAdmin)
                 {
-                    <li class="nav-item">
-
-                    </li>
+                    @Html.ActionLink("Users", "Index", "User",null, new { Class = "nav-link nav-item" })
                 }
             </ul>
 
@@ -40,7 +42,7 @@
                     @if (Security.LoggedUser == null)
                     {
                         <script>
-                            window.location.href = "/";
+                            window.location.href = "/User/Login";
                         </script>
                     }
                     else
@@ -51,9 +53,7 @@
                     }
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("Login","User",new { exit=true})">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Sign Out
                         </a>
                     </div>
@@ -69,9 +69,5 @@
             <p>&copy; @DateTime.Now.Year - Jobsity</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

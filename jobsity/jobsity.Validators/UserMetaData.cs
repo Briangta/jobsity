@@ -20,13 +20,6 @@ namespace jobsity.Repository
     
     public class UserMetaData
     {
-    	[Key]
-        [Required]
-        public virtual int IdUser
-        {
-            get;
-            set;
-        }
     	
         [StringLength(100, ErrorMessage="Max length is 100")]
         [Required]
@@ -64,6 +57,13 @@ namespace jobsity.Repository
             get;
             set;
     
+        }
+    	[Key]
+        [Required]
+        public virtual int IdUser
+        {
+            get;
+            set;
         }
     }
 }

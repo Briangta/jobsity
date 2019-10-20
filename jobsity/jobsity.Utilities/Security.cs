@@ -22,22 +22,22 @@ namespace jobsity.Utilities
                 HttpContext.Current.Session[SessiionUser] = value;
             }
         }
+
         public bool exit
         {
             get;
             set;
         }
 
-        public static bool isAdmin = false;
+        public static bool isAdmin {
+            get { return LoggedUser.IdRole == (int)EnumRole.Admin; }
+        }
 
         public Security(bool exit = false, bool admin = false)
         {
             this.exit = exit;
             if (!exit && (LoggedUser == null || (admin && LoggedUser.IdRole != (int)EnumRole.Admin)))
-            {
                 this.exit = true;
-            }
-
         }
 
         public static string Md5Enc(string clave)
@@ -52,10 +52,10 @@ namespace jobsity.Utilities
             return md5;
         }
 
-        public static void Login(User user)
+        public void Login(User user)
         {
             LoggedUser = user;
-            isAdmin = user.IdRole == (int)EnumRole.Admin;
+            this.exit = false;
         }
 
         public static void SignOut()
@@ -66,14 +66,13 @@ namespace jobsity.Utilities
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            ////Valida la funcion principal si existe el usuario
-            return this.exit;
+            return !(LoggedUser == null);
         }
 
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            if (this.exit)
+            if (this.exit || LoggedUser==null)
             {
                 filterContext.Result = new RedirectToRouteResult(
                        new System.Web.Routing.RouteValueDictionary

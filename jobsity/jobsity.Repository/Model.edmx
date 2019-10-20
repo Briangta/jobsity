@@ -4,35 +4,36 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="jobsityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="jobsityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="IdMessage" />
           </Key>
           <Property Name="IdMessage" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
-          <Property Name="IdUser" Type="int" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="IdRole" />
           </Key>
           <Property Name="IdRole" Type="int" Nullable="false" />
-          <Property Name="Name" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="IdUser" />
           </Key>
-          <Property Name="IdUser" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdRole" Type="int" />
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FkMessageUser">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -68,44 +69,57 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="jobsityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="jobsityEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Message" EntityType="jobsityModel.Message" />
+          <EntitySet Name="Role" EntityType="jobsityModel.Role" />
+          <EntitySet Name="User" EntityType="jobsityModel.User" />
+          <AssociationSet Name="FkMessageUser" Association="jobsityModel.FkMessageUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FkUserRole" Association="jobsityModel.FkUserRole">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Message">
           <Key>
             <PropertyRef Name="IdMessage" />
           </Key>
           <Property Name="IdMessage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Message1" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdUser" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FkMessageUser" FromRole="Message" ToRole="User" />
+          <Property Name="Message1" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="jobsityModel.FkMessageUser" FromRole="Message" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="IdRole" />
           </Key>
           <Property Name="IdRole" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FkUserRole" FromRole="Role" ToRole="User" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="jobsityModel.FkUserRole" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="IdUser" />
           </Key>
-          <Property Name="IdUser" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IdRole" Type="Int32" />
-          <NavigationProperty Name="Message" Relationship="Self.FkMessageUser" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="Role" Relationship="Self.FkUserRole" FromRole="User" ToRole="Role" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Message" Relationship="jobsityModel.FkMessageUser" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Role" Relationship="jobsityModel.FkUserRole" FromRole="User" ToRole="Role" />
         </EntityType>
         <Association Name="FkMessageUser">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <End Type="jobsityModel.User" Role="User" Multiplicity="1" />
+          <End Type="jobsityModel.Message" Role="Message" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="IdUser" />
@@ -116,8 +130,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FkUserRole">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Type="jobsityModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="jobsityModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="IdRole" />
@@ -127,19 +141,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="jobsityEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Message" EntityType="Self.Message" />
-          <EntitySet Name="Role" EntityType="Self.Role" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <AssociationSet Name="FkMessageUser" Association="Self.FkMessageUser">
-            <End Role="User" EntitySet="User" />
-            <End Role="Message" EntitySet="Message" />
-          </AssociationSet>
-          <AssociationSet Name="FkUserRole" Association="Self.FkUserRole">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -149,17 +150,18 @@
           <EntitySetMapping Name="Message">
             <EntityTypeMapping TypeName="jobsityModel.Message">
               <MappingFragment StoreEntitySet="Message">
-                <ScalarProperty Name="IdMessage" ColumnName="IdMessage" />
-                <ScalarProperty Name="Message1" ColumnName="Message" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Message1" ColumnName="Message" />
+                <ScalarProperty Name="IdMessage" ColumnName="IdMessage" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Role">
             <EntityTypeMapping TypeName="jobsityModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -167,11 +169,11 @@
             <EntityTypeMapping TypeName="jobsityModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

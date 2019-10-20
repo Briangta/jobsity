@@ -35,11 +35,18 @@ namespace jobsity.Repository
             get;
             set;
         }
-        public virtual Nullable<int> IdUser
+        [Required]
+        public virtual int IdUser
         {
             get;
             set;
     
+        }
+        [Required]
+        public virtual System.DateTime Date
+        {
+            get;
+            set;
         }
     }
 }

@@ -25,7 +25,9 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false)#>
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 [MetadataType(typeof(<#=code.Escape(entity)#>MetaData))]
+
 <#=codeStringGenerator.EntityClassOpening(entity)#>
 {
 <#
@@ -301,7 +303,7 @@ public class CodeStringGenerator
         return string.Format(
             CultureInfo.InvariantCulture,
             "{0} {1} {2} {{ {3}get; {4}set; }}",
-            AccessibilityAndVirtual(Accessibility.ForNavigationProperty(navProp)),
+            (navProp.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.Many ?"[JsonIgnore] ":"")+AccessibilityAndVirtual(Accessibility.ForNavigationProperty(navProp)),
             navProp.ToEndMember.RelationshipMultiplicity == RelationshipMultiplicity.Many ? ("ICollection<" + endType + ">") : endType,
             _code.Escape(navProp),
             _code.SpaceAfter(Accessibility.ForGetter(navProp)),

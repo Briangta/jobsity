@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a88535b39fcb44189cb5f12125583306" Name="Diagram1">
-        <EntityTypeShape EntityType="jobsityModel.Message" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="jobsityModel.Role" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="jobsityModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="jobsityModel.FkMessageUser" ManuallyRouted="false" />
-        <AssociationConnector Association="jobsityModel.FkUserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="jobsityModel.Message" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="jobsityModel.Role" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="jobsityModel.User" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="jobsityModel.FkMessageUser" />
+        <AssociationConnector Association="jobsityModel.FkUserRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

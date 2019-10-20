@@ -27,7 +27,9 @@ namespace jobsity.Repository
             get;
             set;
         }
-        public virtual Nullable<int> Name
+    	
+        [StringLength(50, ErrorMessage="Max length is 50")]
+        public virtual string Name
         {
             get;
             set;

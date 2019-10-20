@@ -9,16 +9,16 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @*@Html.HiddenFor(r => r.IdUser, Security.LoggedUser.IdUser)*@
+    @Html.HiddenFor(r => r.IdUser,new {Value= Security.LoggedUser.IdUser })
 
     <div class="card col-sm-6 offset-sm-4">
         <div class="card-header bg-primary text-white card-title">CHAT</div>
-        <div class="card-body" id="messages">
-
+        <div class="card-body" id="messagesContainer">
+            <div id="messageTemplate"  style="display:none" class="alert alert-primary"><span class="details">Daniel</span> <span class="date">2019/10/10 23:50</span> <br/> <span class="message">Hola</span> </div>
         </div>
         <div class="card-footer">
             @Html.LabelFor(r => r.Message1, "Message")
-            @Html.TextAreaFor(r => r.Message1, new { Class = "form-control", Required = "" }) <input type="submit" value="Enviar" class="btn btn-outline-primary" />
+            @Html.TextAreaFor(r => r.Message1, new { Class = "form-control", Required = "" }) <input type="submit" value="Send" class="btn btn-outline-primary" />
         </div>
     </div>
 
@@ -27,3 +27,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="~/Scripts/chat.js"></script>

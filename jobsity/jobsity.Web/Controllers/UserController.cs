@@ -22,7 +22,7 @@ namespace jobsity.Web.Controllers
             return View(user.ToList());
         }
 
-        public ActionResult Login(bool exit=false)
+        public ActionResult Login(bool exit = false)
         {
             if (exit)
                 Security.SignOut();
@@ -33,15 +33,16 @@ namespace jobsity.Web.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            Security security = new Security();
             string pass = Security.Md5Enc(user.Password);
-            var us=db.User.Where(r => r.Email == user.Email && r.Password == pass).FirstOrDefault();
+            var us = db.User.Where(r => r.Email == user.Email && r.Password == pass).FirstOrDefault();
             if (us == null)
             {
                 ModelState.AddModelError("Password", "Incorrect User/Password");
                 return View();
             }
 
-            Security.Login(us);
+            security.Login(us);
 
             return RedirectToAction("Index", "Chat");
         }
@@ -49,7 +50,7 @@ namespace jobsity.Web.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
-            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "IdRole");
+            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "Name");
             return View();
         }
 
@@ -62,12 +63,13 @@ namespace jobsity.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = Security.Md5Enc(user.Password);
                 db.User.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "IdRole", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "Name", user.IdRole);
             return View(user);
         }
 
@@ -79,11 +81,12 @@ namespace jobsity.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             User user = db.User.Find(id);
+            user.Password = "";
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "IdRole", user.IdRole);
+            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "Name", user.IdRole);
             return View(user);
         }
 
@@ -94,13 +97,21 @@ namespace jobsity.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdUser,FirstName,LastName,Email,Password,IdRole")] User user)
         {
+            ModelState.Remove("Password");
+            string passwod = db.User.Where(r => r.IdUser == user.IdUser).Select(r => r.Password).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(user.Password))
+                    user.Password = passwod;
+                else
+                    user.Password = Security.Md5Enc(user.Password);
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "IdRole", user.IdRole);
+
+            ViewBag.IdRole = new SelectList(db.Role, "IdRole", "Name", user.IdRole);
             return View(user);
         }
 
