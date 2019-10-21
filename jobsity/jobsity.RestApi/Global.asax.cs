@@ -20,7 +20,7 @@ namespace jobsity.RestApi
 
         public void loadFile()
         {
-            string path = Path.Combine(HttpRuntime.AppDomainAppPath, "Models", "aapl.us.csv");
+            string path = Path.Combine(HttpRuntime.AppDomainAppPath, "aapl.us.csv");
             while (true)
             {
                 List<List<string>> data = ExcelUtility.CargarExcel(new FileStream(path, FileMode.Open));
