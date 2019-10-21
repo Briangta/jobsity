@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.138
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jobsity.Web", "jobsity.Web\jobsity.Web.csproj", "{49F1AD71-DC39-49D4-9270-93012A2CB9EC}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jobsity.Validators", "jobsity.Validators\jobsity.Validators.csproj", "{41CFFFD5-631A-4E16-88EC-E2D090183372}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jobsity.Utilities", "jobsity.Utilities\jobsity.Utilities.csproj", "{A1C2E52C-8919-4DA8-8155-E7B34FF5399B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jobsity.RestApi", "jobsity.RestApi\jobsity.RestApi.csproj", "{9008F11D-227E-4665-A59E-A5C3D7CAC122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A1C2E52C-8919-4DA8-8155-E7B34FF5399B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1C2E52C-8919-4DA8-8155-E7B34FF5399B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1C2E52C-8919-4DA8-8155-E7B34FF5399B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9008F11D-227E-4665-A59E-A5C3D7CAC122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9008F11D-227E-4665-A59E-A5C3D7CAC122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9008F11D-227E-4665-A59E-A5C3D7CAC122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9008F11D-227E-4665-A59E-A5C3D7CAC122}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{EF013050-9359-4375-A4E0-4FA0C79DCB36} = {6F2B55CC-D13F-4799-B236-529C457BAB17}
 		{41CFFFD5-631A-4E16-88EC-E2D090183372} = {6F2B55CC-D13F-4799-B236-529C457BAB17}
 		{A1C2E52C-8919-4DA8-8155-E7B34FF5399B} = {773D0E06-2E71-446D-B118-CA8C77A7A2F3}
+		{9008F11D-227E-4665-A59E-A5C3D7CAC122} = {694ACE83-2429-4B29-AFFC-F027B2032383}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87384C9C-0738-467A-9BC1-9F2C08553DB4}

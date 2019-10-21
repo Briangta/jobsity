@@ -10,6 +10,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(r => r.IdUser,new {Value= Security.LoggedUser.IdUser })
+    @Html.Hidden("botUrl",(string)ViewBag.BotUrl)
+    @Html.Hidden("botUserId",(int)ViewBag.BotUserId)
 
     <div class="card col-sm-6 offset-sm-4">
         <div class="card-header bg-primary text-white card-title">CHAT</div>

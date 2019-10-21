@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,8 @@ namespace jobsity.Web.Controllers
         [Security()]
         public ActionResult Index()
         {
-
+            ViewBag.BotUrl = ConfigurationManager.AppSettings["botUrl"];
+            ViewBag.BotUserId = db.User.Where(r => r.IdRole == 3).Select(r=>r.IdUser).FirstOrDefault();
             return View();
         }
 
